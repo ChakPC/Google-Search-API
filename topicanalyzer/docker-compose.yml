@@ -1,9 +1,0 @@
-version: "3.3"
-services:
-  oda-cc-topicanalyzer:
-    build: .
-    image: "oda-cc-topicanalyzer:1.0"
-    container_name: "oda-cc-topicanalyzer"
-    command: "npm start"
-    ports:
-      - 3000:3000    
