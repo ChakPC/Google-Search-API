@@ -61,7 +61,7 @@ module.exports = {
         conversation.logger().info("Data received from API")
 
         const shortAnswerJsonAttribute = "answer_box"
-        const shortAnswerJsonSubattributes = ["answer", "snippet", "result"]
+        const shortAnswerJsonSubattributes = ["answer", "snippet", "result", "dates"]
         const longAnswerJsonAttribute = "knowledge_graph"
         const longAnswerJsonSubattributes = ["description"]
 
@@ -71,8 +71,24 @@ module.exports = {
         if (data.hasOwnProperty(shortAnswerJsonAttribute)) {
           for (let i = 0; i < shortAnswerJsonSubattributes.length; i++) {
             if (data[shortAnswerJsonAttribute].hasOwnProperty(shortAnswerJsonSubattributes[i])) {
-              _shortAnswer = data[shortAnswerJsonAttribute][shortAnswerJsonSubattributes[i]];
-              shortAnswerFound = 1;
+              if(shortAnswerJsonSubattributes[i] == "dates"){
+                var len = data[shortAnswerJsonAttribute][shortAnswerJsonSubattributes[i]].length;
+                if (len == 1){
+                  _shortAnswer = data[shortAnswerJsonAttribute][shortAnswerJsonSubattributes[i]][0].toString();
+                  shortAnswerFound = 1;
+                }
+                else if(len == 2){
+                  _shortAnswer = "From " + data[shortAnswerJsonAttribute][shortAnswerJsonSubattributes[i]][0].toString() + " To " + data[shortAnswerJsonAttribute][shortAnswerJsonSubattributes[i]][1].toString();
+                  shortAnswerFound = 1;
+                }
+                else{
+                  shortAnswerFound = 0;
+                }
+              }
+              else{
+                _shortAnswer = data[shortAnswerJsonAttribute][shortAnswerJsonSubattributes[i]].toString();
+                shortAnswerFound = 1;
+              }
               conversation.logger().info("Short Answer received: " + _shortAnswer + " under sub-attribute: " + shortAnswerJsonSubattributes[i]);
             }
           }
