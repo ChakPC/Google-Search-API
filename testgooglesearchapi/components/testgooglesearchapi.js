@@ -13,7 +13,6 @@ module.exports = {
     properties: {
       variable: {required: true, type: 'string'},
       apiKey : {required: true, type: 'string'},
-      question: {required: true, type: 'string'}
     },
     supportedActions: ['shortAnswerFound', 'longAnswerFound', 'shortAndLongAnswerFound', 'answerNotFound', 'failure']
   }),
@@ -30,13 +29,13 @@ module.exports = {
       
       const { variable } = conversation.properties();
       const { apiKey } = conversation.properties()
-      const { question } = conversation.properties();
 
       // Log info to console
-      conversation.logger().info("Input Parameters: Variable: " + variable + ", Question: " + question);
-  
+      
       // Make the URL
+      var question = conversation.text();
       var questionInUrl = encodeURIComponent(question)
+      conversation.logger().info("Input Parameters: Variable: " + variable + ", Question: " + question);
       var reqUrl = "https://serpapi.com/search.json?engine=google&q=" + questionInUrl + "&google_domain=google.com&gl=us&hl=en&api_key=" + apiKey
 
       const axios = require('axios');
