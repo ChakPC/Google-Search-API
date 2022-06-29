@@ -61,7 +61,7 @@ module.exports = {
         conversation.logger().info("Data received from API")
 
         const shortAnswerJsonAttribute = "answer_box"
-        const shortAnswerJsonSubattributes = ["answer", "snippet", "result", "dates"]
+        const shortAnswerJsonSubattributes = ["snippet", "result", "answer", "dates"]
         const longAnswerJsonAttribute = "knowledge_graph"
         const longAnswerJsonSubattributes = ["description"]
 
